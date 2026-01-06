@@ -912,8 +912,8 @@ function App() {
           {(() => {
             const now = new Date();
             const hours = now.getHours();
-            const isMorning = hours >= 5 && hours < 12;
-            const isEvening = hours >= 17 && hours < 20;
+            const isMorning = hours >= 5 && hours < 15;
+            const isEvening = hours >= 15 || hours < 5;
 
             if (!isMorning && !isEvening) {
               return null;
