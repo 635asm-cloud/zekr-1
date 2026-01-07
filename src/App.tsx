@@ -920,59 +920,39 @@ function App() {
             }
 
             const timeOfDay = isMorning ? 'morning' : 'evening';
-            const relevantAzkar = morningEveningAzkar.filter(azkar =>
-              (isMorning && azkar.time === 'morning') ||
-              (isEvening && azkar.time === 'evening')
-            );
+            const boxId = timeOfDay === 'morning' ? 'morning-azkar' : 'evening-azkar';
+            const boxTitle = timeOfDay === 'morning' ? 'أذكار الصباح' : 'أذكار المساء';
 
-            if (relevantAzkar.length > 0) {
-              return (
-                <div
-                  className="rounded-3xl shadow-2xl p-6"
-                  style={{
-                    backgroundColor: colors.card,
-                    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2)'
-                  }}
-                >
-                  <h3 className="text-xl font-bold mb-4 text-center" style={{ color: colors.text }}>
-                    {timeOfDay === 'morning' ? 'أذكار الصباح' : 'أذكار المساء'}
+            return (
+              <div
+                className="rounded-3xl shadow-2xl p-6"
+                style={{
+                  backgroundColor: colors.card,
+                  boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2)'
+                }}
+              >
+                <label className="container flex items-center gap-4 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={readAzkar.has(boxId)}
+                    onChange={(e) => {
+                      const newReadAzkar = new Set(readAzkar);
+                      if (e.target.checked) {
+                        newReadAzkar.add(boxId);
+                      } else {
+                        newReadAzkar.delete(boxId);
+                      }
+                      setReadAzkar(newReadAzkar);
+                      localStorage.setItem('readAzkar', JSON.stringify([...newReadAzkar]));
+                    }}
+                  />
+                  <span className="checkmark"></span>
+                  <h3 className="text-2xl font-bold flex-1" style={{ color: colors.text }}>
+                    {boxTitle}
                   </h3>
-                  <div className="space-y-4">
-                    {relevantAzkar.map((azkar) => (
-                      <label key={azkar.id} className="container flex items-start gap-3 cursor-pointer">
-                        <input
-                          type="checkbox"
-                          checked={readAzkar.has(azkar.id)}
-                          onChange={(e) => {
-                            const newReadAzkar = new Set(readAzkar);
-                            if (e.target.checked) {
-                              newReadAzkar.add(azkar.id);
-                            } else {
-                              newReadAzkar.delete(azkar.id);
-                            }
-                            setReadAzkar(newReadAzkar);
-                            localStorage.setItem('readAzkar', JSON.stringify([...newReadAzkar]));
-                          }}
-                        />
-                        <span className="checkmark" style={{ marginTop: '0.2rem' }}></span>
-                        <div className="flex-1">
-                          <p className="text-xl font-semibold mb-2" style={{ color: colors.text }}>
-                            {azkar.arabic}
-                          </p>
-                          <p className="text-sm italic mb-1" style={{ color: colors.textLight }}>
-                            {azkar.transliteration}
-                          </p>
-                          <p className="text-sm" style={{ color: colors.textLight }}>
-                            {azkar.translation}
-                          </p>
-                        </div>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              );
-            }
-            return null;
+                </label>
+              </div>
+            );
           })()}
 
           {/* Main Zikr Box */}
