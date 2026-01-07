@@ -7,6 +7,8 @@ interface Zikr {
   translation: string;
   count?: number;
   preferredTime?: 'friday' | 'morning' | 'afternoon' | 'evening' | 'night' | 'any';
+  reason?: string;
+  benefit?: string;
 }
 
 interface MorningEveningZikr {
@@ -60,61 +62,81 @@ const azkarList: Zikr[] = [
     arabic: 'سُبْحَانَ اللَّهِ وَبِحَمْدِهِ',
     transliteration: 'Subhan Allahi wa bihamdihi',
     translation: 'Glory be to Allah and praise Him',
-    preferredTime: 'morning'
+    preferredTime: 'morning',
+    reason: 'تنزيه الله عن النقائص وحمده على نعمه',
+    benefit: 'يملأ الميزان ويرفع الدرجات'
   },
   {
     arabic: 'لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ',
     transliteration: 'La ilaha illa Allah wahdahu la sharika lah',
     translation: 'There is no deity except Allah, alone without partner',
-    preferredTime: 'any'
+    preferredTime: 'any',
+    reason: 'التوحيد والإقرار بوحدانية الله',
+    benefit: 'أعظم الذكر وأحب الأعمال إلى الله'
   },
   {
     arabic: 'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ',
     transliteration: 'Allahumma salli ala Muhammad wa ala ali Muhammad',
     translation: 'O Allah, send blessings upon Muhammad and his family',
-    preferredTime: 'friday'
+    preferredTime: 'friday',
+    reason: 'الصلاة على النبي وأتباعه والدعاء له',
+    benefit: 'الصلاة على النبي تغفر الذنوب وتكفر السيئات'
   },
   {
     arabic: 'أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ',
     transliteration: 'Astaghfirullah wa atubu ilayh',
     translation: 'I seek forgiveness from Allah and repent to Him',
-    preferredTime: 'night'
+    preferredTime: 'night',
+    reason: 'الاستغفار من الذنوب والتوبة إلى الله',
+    benefit: 'يفتح أبواب الرحمة ويمحو الذنوب'
   },
   {
     arabic: 'سُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ وَلَا إِلَٰهَ إِلَّا اللَّهُ وَاللَّهُ أَكْبَرُ',
     transliteration: 'Subhan Allah wal hamdu lillah wa la ilaha illa Allah wa Allahu Akbar',
     translation: 'Glory be to Allah, praise be to Allah, there is no deity except Allah, and Allah is the Greatest',
-    preferredTime: 'morning'
+    preferredTime: 'morning',
+    reason: 'جمع بين التسبيح والتحميد والتوحيد والتكبير',
+    benefit: 'تحت العرش في السماء السابعة وتثقل الميزان'
   },
   {
     arabic: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ',
     transliteration: 'La hawla wa la quwwata illa billah',
     translation: 'There is no power nor strength except with Allah',
-    preferredTime: 'any'
+    preferredTime: 'any',
+    reason: 'الاستعانة بالله والتوكل عليه',
+    benefit: 'كنز من كنوز الجنة ومفتاح للفرج'
   },
   {
     arabic: 'حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ',
     transliteration: 'Hasbunallahu wa ni\'mal wakeel',
     translation: 'Allah is sufficient for us, and He is the best Disposer of affairs',
-    preferredTime: 'afternoon'
+    preferredTime: 'afternoon',
+    reason: 'التوكل على الله والثقة به في الأمور',
+    benefit: 'يكفي المسلم شر ما يقلقه ويوفقه للخير'
   },
   {
     arabic: 'رَبِّ اغْفِرْ لِي وَارْحَمْنِي',
     transliteration: 'Rabbi ghfir li war hamni',
     translation: 'My Lord, forgive me and have mercy upon me',
-    preferredTime: 'night'
+    preferredTime: 'night',
+    reason: 'الدعاء بالمغفرة والرحمة من الله',
+    benefit: 'يجلب غفران الله ورحمته على العبد'
   },
   {
     arabic: 'اللَّهُمَّ بَارِكْ لَنَا فِي يَوْمِنَا هَذَا',
     transliteration: 'Allahumma barik lana fi yawmina hadha',
     translation: 'O Allah, bless us on this day',
-    preferredTime: 'friday'
+    preferredTime: 'friday',
+    reason: 'الدعاء بالبركة في اليوم والأعمال',
+    benefit: 'تحل البركة في الوقت والعمل والرزق'
   },
   {
     arabic: 'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ',
     transliteration: 'Rabbana atina fi dunya hasanatan wa fi akhirati hasanatan wa qina adhaban nar',
     translation: 'Our Lord, give us good in this world and good in the Hereafter, and save us from the punishment of the Fire',
-    preferredTime: 'evening'
+    preferredTime: 'evening',
+    reason: 'الدعاء بالخير في الدنيا والآخرة والنجاة من النار',
+    benefit: 'يجلب الخير من كل جانب والحماية من العذاب'
   }
 ];
 
@@ -887,21 +909,23 @@ function App() {
       )}
 
       {pullDistance > 0 && (
-        <div 
-          className="fixed bottom-0 left-0 right-0 flex items-center justify-center z-40 transition-all duration-200 pointer-events-none"
-          style={{ 
+        <div
+          className="fixed bottom-0 left-0 right-0 flex items-center justify-center z-40 transition-all duration-200 pointer-events-none p-4"
+          style={{
             transform: `translateY(${Math.min(pullDistance, 100)}px)`,
             opacity: Math.min(pullDistance / 80, 1)
           }}
         >
-          <div 
-            className="px-4 py-2 rounded-full"
-            style={{ 
+          <div
+            className="rounded-2xl p-4 max-w-sm w-full"
+            style={{
               backgroundColor: colors.accent,
-              color: colors.text
+              color: colors.text,
+              boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.3)'
             }}
           >
-            <p className="text-sm font-semibold">اسحب للأعلى للحصول على ذكر جديد</p>
+            <p className="text-xs font-semibold mb-2">السبب: {currentZikr.reason}</p>
+            <p className="text-xs">الفائدة: {currentZikr.benefit}</p>
           </div>
         </div>
       )}
